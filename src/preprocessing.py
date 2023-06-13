@@ -1,6 +1,6 @@
 import cv2
 from src.hand_crafted_features import hand_crafted_features
-from ae import auto_encoder
+# from ae import auto_encoder
 import numpy as np
 import glob
 import sys
