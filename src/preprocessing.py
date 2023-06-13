@@ -3,6 +3,9 @@ from hand_crafted_features import hand_crafted_features
 import numpy as np
 import glob
 import sys
+from base import DATA_DIR
+
+print(DATA_DIR)
 
 def get_images_paths(image_directory, file_extensions):
     """
@@ -28,6 +31,7 @@ def get_images_paths(image_directory, file_extensions):
     images = glob.glob(image_directory)
     print(images)
     
+
 
 def create_feature_list(image_paths):
     """
