@@ -4,6 +4,7 @@ import numpy as np
 import glob
 import sys
 from base import DATA_DIR
+#Trennzeichen: import os os.sep oder from pathlib import PATH
 
 print(DATA_DIR)
 
@@ -97,4 +98,4 @@ def preprocessing_main(image_directory, output_path, file_extensions = (".png", 
 
 
 if __name__ == '__main__':
-    preprocessing_main(image_directory = "/Users/laura/Dev/MIR/mir_image_processing/DATA/test_images/", output_path="static/")
+    preprocessing_main(image_directory = DATA_DIR, output_path="static/")
