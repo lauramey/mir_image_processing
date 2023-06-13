@@ -90,7 +90,7 @@ def write_to_file(feature_list, image_paths, output_path):
     """
     
 
-    file = open(output_path, "w")
+    file = open(output_path + '.csv', "w")
     writer = csv.writer(file)
     for i, feature in enumerate(feature_list):       
         row = image_paths[i] + ',' + ','.join(str(x) for x in feature) + '\n'
