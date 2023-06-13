@@ -4,6 +4,7 @@ import numpy as np
 import glob
 import sys
 from base import DATA_DIR
+import csv
 #Trennzeichen: import os os.sep oder from pathlib import PATH
 
 print(DATA_DIR)
@@ -31,7 +32,7 @@ def get_images_paths(image_directory, file_extensions):
     """
     images = []
     for extension in file_extensions: 
-        images.append(glob.glob(image_directory + '*' + extension))
+        images.extend(glob.glob(image_directory + '*' + extension))
 
     return images
 
@@ -56,8 +57,14 @@ def create_feature_list(image_paths):
         - Extract features with class "feature_extractor"
         - Add features to a list "result"
     """
-    pass
-    #TODO:
+    feature_extractor = hand_crafted_features()
+
+    features = []
+    for imagePath in image_paths: 
+       image = cv2.imread(imagePath)
+       features.append(feature_extractor.extract(image))
+    
+    return features
 
 
 def write_to_file(feature_list, image_paths, output_path):
@@ -81,8 +88,16 @@ def write_to_file(feature_list, image_paths, output_path):
 
         - Information about files http://www.tutorialspoint.com/python/file_write.htm 
     """
-    pass
-    #TODO:
+    
+
+    file = open(output_path, "w")
+    writer = csv.writer(file)
+    for i, feature in enumerate(feature_list):       
+        row = image_paths[i] + ',' + ','.join(str(x) for x in feature) + '\n'
+        #print(row)
+        writer.writerow([row])
+        
+    file.close()
 
 
 def preprocessing_main(image_directory, output_path, file_extensions = (".png", ".jpg")):
@@ -93,9 +108,10 @@ def preprocessing_main(image_directory, output_path, file_extensions = (".png", 
     image_paths = get_images_paths(image_directory, file_extensions)
 
     feature_list  = create_feature_list(image_paths)
-
+    
     write_to_file(feature_list, image_paths, output_path)
 
 
 if __name__ == '__main__':
-    preprocessing_main(image_directory = DATA_DIR, output_path="static/")
+    #TODO: relativer Pfad hier :(
+    preprocessing_main(image_directory = "/Users/laura/Dev/MIR/mir_image_processing/DATA/test_images_small/", output_path="/Users/laura/Dev/MIR/mir_image_processing/DATA/output")
