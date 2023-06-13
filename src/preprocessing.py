@@ -28,8 +28,12 @@ def get_images_paths(image_directory, file_extensions):
             - Add the paths to a list  (extend)
         - Return result
     """
-    images = glob.glob(image_directory)
-    print(images)
+    images = []
+    for extension in file_extensions: 
+        images.append(glob.glob(image_directory + '*' + extension))
+
+    return images
+
     
 
 
