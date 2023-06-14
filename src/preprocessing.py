@@ -7,7 +7,6 @@ from base import DATA_DIR
 import csv
 #Trennzeichen: import os os.sep oder from pathlib import PATH
 
-print(DATA_DIR)
 
 def get_images_paths(image_directory, file_extensions):
     """
@@ -61,7 +60,8 @@ def create_feature_list(image_paths):
 
     features = []
     for imagePath in image_paths: 
-       image = cv2.imread(imagePath)
+       image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
+       assert image is not None
        features.append(feature_extractor.extract(image))
     
     return features
@@ -89,12 +89,11 @@ def write_to_file(feature_list, image_paths, output_path):
         - Information about files http://www.tutorialspoint.com/python/file_write.htm 
     """
     
-
     file = open(output_path + '.csv', "w")
     writer = csv.writer(file)
+
     for i, feature in enumerate(feature_list):       
         row = image_paths[i] + ',' + ','.join(str(x) for x in feature) + '\n'
-        #print(row)
         writer.writerow([row])
         
     file.close()

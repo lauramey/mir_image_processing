@@ -32,7 +32,7 @@ class hand_crafted_features:
         """
         # TODO: You can change your extraction method here:
         features = self.image_pixels(image)
-        
+
         # TODO: You can even extend features with another method:
         #features.extend(self.thumbnail_features(image))
 
