@@ -2,9 +2,9 @@ from hand_crafted_features import hand_crafted_features
 #from ae import auto_encoder
 from searcher import Searcher
 import cv2
-from pathlib import Path
-import csv
+import os
 import numpy as np
+from base import OUTPUT_DIR, IMAGE_DIR
 
 class Query:
     
@@ -86,7 +86,7 @@ class Query:
             return self.results[:limit]
 
 if __name__ == "__main__":
-    query = Query(path_to_index= "/Users/laura/Dev/MIR/mir_image_processing/DATA/output.csv")
-    query.set_image_name(query_image_name="/Users/laura/Dev/MIR/mir_image_processing/DATA/test_images_small/3145.png")
+    query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
+    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3145.png"))
     query_result = query.run()
     print("Retrieved images: ", query_result)
