@@ -31,8 +31,9 @@ class hand_crafted_features:
         [126, 157, 181, 203, 213, 186, 168, 140, 138, 155, 177, 176]
         """
         # TODO: You can change your extraction method here:
-        features = self.image_pixels(image)
-
+       # features = self.image_pixels(image)
+        features = self.histogram(image)
+        #print(features)
         # TODO: You can even extend features with another method:
         #features.extend(self.thumbnail_features(image))
 
@@ -57,9 +58,11 @@ class hand_crafted_features:
             - Create a list out of the histogram (hist.tolist())
             - Return a list (flatten)
         """
-        #TODO:
-        pass
+        hist = cv2.calcHist([image], [0], None, [256], [0,256]).tolist()
+        for index, item in enumerate(hist):
+            hist[index] = int(item[0])
 
+        return hist
 
     def thumbnail_features(self, image):
         """

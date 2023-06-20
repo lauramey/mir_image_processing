@@ -5,6 +5,7 @@ import glob
 import sys
 from base import DATA_DIR
 import csv
+import pandas as pd
 #Trennzeichen: import os os.sep oder from pathlib import PATH
 
 
@@ -89,14 +90,19 @@ def write_to_file(feature_list, image_paths, output_path):
         - Information about files http://www.tutorialspoint.com/python/file_write.htm 
     """
     
+    df = pd.DataFrame(feature_list)
+    df['path'] = image_paths
+
+    df.to_csv(output_path + '.csv')
+""" 
     file = open(output_path + '.csv', "w")
-    writer = csv.writer(file)
+    writer = csv.writer(file, delimiter=";")
 
     for i, feature in enumerate(feature_list):       
-        row = image_paths[i] + ',' + ','.join(str(x) for x in feature) + '\n'
+        row = image_paths[i] + ';' + ';'.join(str(x) for x in feature) + '\n'
         writer.writerow([row])
         
-    file.close()
+    file.close() """
 
 
 def preprocessing_main(image_directory, output_path, file_extensions = (".png", ".jpg")):
