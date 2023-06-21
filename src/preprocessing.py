@@ -119,4 +119,4 @@ def preprocessing_main(image_directory, output_path, file_extensions = (".png", 
 
 if __name__ == '__main__':
     #TODO: relativer Pfad hier :(
-    preprocessing_main(image_directory = "/Users/laura/Dev/MIR/mir_image_processing/DATA/test_images_small/", output_path="/Users/laura/Dev/MIR/mir_image_processing/DATA/output")
+    preprocessing_main(image_directory = "/Users/laura/Dev/MIR/mir_image_processing/DATA/test_images/", output_path="/Users/laura/Dev/MIR/mir_image_processing/DATA/output")

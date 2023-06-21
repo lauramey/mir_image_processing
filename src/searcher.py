@@ -166,6 +166,6 @@ class Searcher:
         for _, row in df.iterrows():
             result[row[-1]] = cosine_distance(query_features, row[:-1].values.flatten())
         
-        
-        return sorted(result)
+        #TODO: hier wird noch nach keys sortiert ...
+        return sorted(result, reverse=True)
         
