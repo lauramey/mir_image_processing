@@ -83,8 +83,8 @@ class hand_crafted_features:
             - Create a list from the image (np array)
             - Return a list (flatten)
         """
-        #TODO:
-        pass
+        resized_image = np.array(cv2.resize(src=image, dsize=(30,30), interpolation=cv2.INTER_AREA))
+        return resized_image.flatten()
 
 
     def partitionbased_histograms(self, image, factor = 10):
