@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from hand_crafted_features import hand_crafted_features
+import operator
 
 def square_rooted(x):
     """
@@ -159,13 +160,12 @@ class Searcher:
             exit()
         
         df = pd.read_csv(self.path_to_index)
-
+        
         # row_list = df.values.flatten()
         result = {}
 
         for _, row in df.iterrows():
             result[row[-1]] = cosine_distance(query_features, row[:-1].values.flatten())
         
-        #TODO: hier wird noch nach keys sortiert ...
-        return sorted(result, reverse=True)
+        return sorted(result.items(), key=operator.itemgetter(1))
         
