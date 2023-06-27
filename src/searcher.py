@@ -5,7 +5,7 @@ import numpy as np
 from numpy.core import sqrt, add
 from pathlib import Path
 import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity as cs
 from hand_crafted_features import hand_crafted_features
 import operator
 
@@ -115,8 +115,10 @@ def cosine_distance(x, y):
     -------
         - Convert 'cosine similarity' to distance.
     """
-    return cosine_similarity(x=x, y=y)
-
+    cos_sim = cs(x.reshape(-1,1),y.reshape(-1,1))
+    print(cos_sim)
+    #print(1 - cos_sim)
+    return cos_sim
 class Searcher:
 
     def __init__(self, path_to_index):
@@ -165,7 +167,8 @@ class Searcher:
         result = {}
 
         for _, row in df.iterrows():
-            result[row[-1]] = cosine_distance(query_features, row[:-1].values.flatten())
+            result[row[-1]] = cosine_distance(np.array(query_features), row[:-1].values.flatten())
+            
         
         return sorted(result.items(), key=operator.itemgetter(1))
         
