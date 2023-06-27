@@ -24,7 +24,7 @@ def csv_to_dict(file_path):
     - For each row, add an entry to a dict (first column is key, second column is value)
     - Return the dict
     """
-    return dict(zip(*pd.read_csv(file_path, delimiter=";", header=None).dropna().values.T))
+    return dict(zip(*pd.read_csv(file_path, delimiter=";", header=None, dtype=str, keep_default_na=False).values.T))
 
     
 class IRMA:
@@ -79,7 +79,7 @@ class IRMA:
         codes = []
         for image_name in image_names:
             image_name_cleaned = Path(image_name).stem 
-            #print(self.image_codes)
+            print(type(list(self.image_codes.keys())[0]))
             try:
                 print(str(image_name_cleaned))
 
@@ -115,7 +115,11 @@ class IRMA:
         for idx, image_code in enumerate(codes):
             temp_list = []
             for index, _ in enumerate(image_code):
-                temp_list.append(self.codes_list[idx][image_code[0:index]])
+                try:
+                    temp_list.append(self.codes_list[idx][image_code[0:index+1]])
+                except Exception as e:
+                    # temp_list.append('not in the files')
+                    pass
             decoded_dict[self.labels_short[idx]] = temp_list
 
         return decoded_dict
