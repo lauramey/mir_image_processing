@@ -115,10 +115,14 @@ def cosine_distance(x, y):
     -------
         - Convert 'cosine similarity' to distance.
     """
-    cos_sim = cs(x.reshape(-1,1),y.reshape(-1,1))
-    print(cos_sim)
+    similarity = 0
+    for feature_x, feature_y in zip(x,y):
+        similarity += feature_x * feature_y
+
+    #cos_sim = cs(x,y)
     #print(1 - cos_sim)
-    return cos_sim
+    return 1 - (similarity/ np.linalg.norm(x) * np.linalg.norm(y) + 1)/2
+
 class Searcher:
 
     def __init__(self, path_to_index):
@@ -167,8 +171,9 @@ class Searcher:
         result = {}
 
         for _, row in df.iterrows():
-            result[row[-1]] = cosine_distance(np.array(query_features), row[:-1].values.flatten())
-            
+            result[row[-1]] = cosine_distance(np.array(query_features), row[1:-1].values.flatten())
+        
+        #print(sorted(result.items(), key=operator.itemgetter(1)))
         
         return sorted(result.items(), key=operator.itemgetter(1))
         

@@ -93,9 +93,9 @@ if __name__ == "__main__":
     cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3145.png")))
     cv2.waitKey(0)
 
-    cv2.imshow('First result', cv2.imread(query_result[0]))
+    cv2.imshow('First result', cv2.imread(os.path.abspath(query_result[0][0])))
     cv2.waitKey(0)
-    cv2.imshow('Second result', cv2.imread(query_result[1]))
+    cv2.imshow('Second result', cv2.imread(os.path.abspath(query_result[1][0])))
     # add wait key. window waits until user presses a key
     cv2.waitKey(0)
     cv2.destroyAllWindows()
