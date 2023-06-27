@@ -1,5 +1,8 @@
 import csv
 import os
+import pandas as pd
+from base import IRMA_DIR
+from pathlib import Path
 
 def csv_to_dict(file_path):
     """
@@ -21,7 +24,8 @@ def csv_to_dict(file_path):
     - For each row, add an entry to a dict (first column is key, second column is value)
     - Return the dict
     """
-    pass
+    return dict(zip(*pd.read_csv(file_path, delimiter=";", header=None).dropna().values.T))
+
     
 class IRMA:
     """
@@ -30,7 +34,7 @@ class IRMA:
     labels_long = ["Technical code for imaging modality", "Directional code for imaging orientation", "Anatomical code for body region examined", "Biological code for system examined"]
     labels_short = ["Imaging modality", "Imaging orientation", "Body region", "System"]
 
-    def __init__(self, dir_path= "irma_data/"):
+    def __init__(self, dir_path=os.path.abspath(IRMA_DIR)):
         """
         Constructor of an IRMA element.
 
@@ -45,8 +49,12 @@ class IRMA:
         - Save the dicts (list) as class variable
         - Save "image_codes.csv" as dict in a class variable
         """
-        pass
-
+        self.a = csv_to_dict(dir_path + '/A.csv')
+        self.b = csv_to_dict(dir_path + '/B.csv')
+        self.c = csv_to_dict(dir_path + '/C.csv')
+        self.d = csv_to_dict(dir_path + '/D.csv')
+        self.codes_list = [self.a, self.b, self.c, self.d]
+        self.image_codes = csv_to_dict(dir_path + '/image_codes.csv')
 
     def get_irma(self, image_names):
         """
@@ -68,7 +76,19 @@ class IRMA:
         - Use self.image_dict to convert names to codes. ('None' if no associated code can be found)
         - Return the list of codes
         """
-        pass
+        codes = []
+        for image_name in image_names:
+            image_name_cleaned = Path(image_name).stem 
+            #print(self.image_codes)
+            try:
+                print(str(image_name_cleaned))
+
+                image_codes = self.image_codes[image_name_cleaned]
+                codes.append(image_codes)
+            except Exception as e:
+                print(e.with_traceback)
+
+        return codes
 
     def decode_as_dict(self, code):
         """
@@ -89,7 +109,16 @@ class IRMA:
         - Possible solution: {'Imaging modality': ['x-ray', 'plain radiography', 'analog', 'overview image'], ...}
         - Solution can look different
         """
-        pass
+        codes = code.split("-")
+        decoded_dict = {self.labels_short[0]:[], self.labels_short[1]:[],self.labels_short[2]:[],self.labels_short[3]:[]}
+        
+        for idx, image_code in enumerate(codes):
+            temp_list = []
+            for index, _ in enumerate(image_code):
+                temp_list.append(self.codes_list[idx][image_code[0:index]])
+            decoded_dict[self.labels_short[idx]] = temp_list
+
+        return decoded_dict
 
     def decode_as_str(self, code):
         """
@@ -114,7 +143,8 @@ class IRMA:
         pass
 
 if __name__ == '__main__':
-    image_names = ["1880.png"]
+    csv_to_dict(os.path.abspath("DATA/irma_data/A.csv"))
+    image_names = ["13108.png"]
 
     irma = IRMA()
 
@@ -124,7 +154,7 @@ if __name__ == '__main__':
     if codes is not None:
         code = codes[0]
         print("Dict: \n{}\n\n".format(irma.decode_as_dict(code)))
-        print("String: \n{}\n\n".format(irma.decode_as_str(code)))
+        #print("String: \n{}\n\n".format(irma.decode_as_str(code)))
 
     '''
     Result could look like this:
