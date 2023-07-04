@@ -79,10 +79,9 @@ class IRMA:
         codes = []
         for image_name in image_names:
             image_name_cleaned = Path(image_name).stem 
-            print(type(list(self.image_codes.keys())[0]))
+            #print(type(list(self.image_codes.keys())[0]))
             try:
-                print(str(image_name_cleaned))
-
+                #print(str(image_name_cleaned))
                 image_codes = self.image_codes[image_name_cleaned]
                 codes.append(image_codes)
             except Exception as e:
