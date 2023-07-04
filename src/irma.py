@@ -85,7 +85,7 @@ class IRMA:
                 image_codes = self.image_codes[image_name_cleaned]
                 codes.append(image_codes)
             except Exception as e:
-                print(e.with_traceback)
+                print("code not found", e.with_traceback)
 
         return codes
 
