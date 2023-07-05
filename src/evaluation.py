@@ -163,24 +163,18 @@ def mean_average_precision(limit = 10000):
 
     for image_path in image_paths:
         query.set_image_name(query_image_name=image_path)
-        query_result = query.run()
-        # check nicht, warum hier nicht das Originalbild zurück kommt 
-        print(image_path, query_result[0])
-        #Todo: erstes Element entfernen 
-        query_result = query_result[1:]
-        
-        # todo: nochmal prüfen, ob Dataset mit image_codes.csv zusammenpasst --> keins der Bilder ist im IRMA :D 
+        query_result = query.run()[1:]
 
-        source_irma = irma.get_irma([image_path])
+        source_irma = irma.get_irma([image_path])[0]
         preds_irma = irma.get_irma(list(zip(*query_result))[0])
-
+        
         correct_prediction_list = []
         for pred in preds_irma:
             correct_prediction_list.append(pred == source_irma)
 
             ap_sum += average_precision(correct_prediction_list) 
 
-        #Todo: Compute mean of APs
+        #Todo: Compute mean of APs -- ap_sum/?
     return 
 
 if __name__ == "__main__":

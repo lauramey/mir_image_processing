@@ -59,6 +59,7 @@ class Query:
         feature_extractor = hand_crafted_features()
         self.features = feature_extractor.extract(self.query_image)
 
+
     def run(self, limit = 10):
         """
         Function to start a query if results have not been computed before.
@@ -87,10 +88,10 @@ class Query:
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
-    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3145.png"))
+    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3146.png"))
     query_result = query.run()
     print("Retrieved images: ", query_result)
-    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3145.png")))
+    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3146.png")))
     cv2.waitKey(0)
 
     cv2.imshow('First result', cv2.imread(os.path.abspath(query_result[0][0])))
