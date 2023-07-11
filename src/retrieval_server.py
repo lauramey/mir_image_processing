@@ -3,19 +3,20 @@ from flask import Flask, render_template, request, send_from_directory, jsonify,
 
 from preprocessing import preprocessing_main
 from query import Query
-from irma_code import IRMA
+from irma import IRMA
+from base import DATABASE_PATH, INDEX_PATH, QUERY
 
 """
 This is the main file to run the medical information retrieval server.
 The following dataset can be used to retrieve similar images: https://publications.rwth-aachen.de/record/667228
 """
 
-database_path = "static/images/database/"
+database_path = DATABASE_PATH
 
 feeback_result = None
 selected_image = None
 
-query = Query(path_to_index= "static/index.csv")
+query = Query(path_to_index= INDEX_PATH)
 irma = IRMA()
 # TODO: remove comments not needed
 quantity = 10
@@ -41,7 +42,7 @@ def index():
 @app.route("/selected_image", methods=['POST'])
 def select_query_image():
     global selected_image
-    target = os.path.join(APP_ROOT, 'static/images/query')
+    target = os.path.join(APP_ROOT, QUERY)
 
     if not os.path.isdir(target):
         os.mkdir(target)
@@ -63,7 +64,7 @@ def select_query_image():
 @app.route("/query_result", methods=['POST'])
 def start_query():
 
-    target = os.path.join(APP_ROOT, 'static/images/query/')
+    target = os.path.join(APP_ROOT, QUERY)
 
     if not os.path.isdir(target):
         os.mkdir(target)
