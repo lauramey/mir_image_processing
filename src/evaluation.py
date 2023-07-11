@@ -161,7 +161,7 @@ def mean_average_precision(limit = 10000):
     ap_sum = 0
     image_paths = get_image_paths(os.path.abspath(IMAGE_DIR), file_extensions = (".png", ".jpg"))
 
-    for image_path in image_paths:
+    for image_path in tqdm(image_paths):
         query.set_image_name(query_image_name=image_path)
         query_result = query.run()[1:]
 
@@ -171,11 +171,11 @@ def mean_average_precision(limit = 10000):
         correct_prediction_list = []
         for pred in preds_irma:
             correct_prediction_list.append(pred == source_irma)
+            
+            ap_sum += average_precision(correct_prediction_list, code_count[source_irma]) 
 
-            ap_sum += average_precision(correct_prediction_list) 
-
-        #Todo: Compute mean of APs -- ap_sum/?
-    return 
+        
+    return ap_sum/len(image_paths) 
 
 if __name__ == "__main__":
 
