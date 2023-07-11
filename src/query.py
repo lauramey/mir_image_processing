@@ -85,6 +85,33 @@ class Query:
             self.results = searcher.search(self.features)
             #print(self.results)
             return self.results[:limit]
+    
+    def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
+        """
+        Function to adapt features with rocchio approach.
+
+        Parameters
+        ----------
+        original_query : list
+            Features of the original query.
+        relevant : list
+            Features of the relevant images.
+        non_relevant : list
+            Features of the non relevant images.
+        a : int
+            Rocchio parameter.
+        b : int
+            Rocchio parameter.
+        c : int
+            Rocchio parameter.
+        Returns
+        -------
+        - features : list
+            List with of features.
+        """
+
+    # TODO:
+    pass
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
