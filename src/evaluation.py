@@ -22,7 +22,7 @@ def get_image_paths(image_directory, file_extensions):
 
     return images
 
-def count_codes(code_path = os.path.abspath(IRMA_DIR) + "/image_codes.csv"): 
+def count_codes(code_path = os.path.abspath(IRMA_DIR) + "/image_codes.txt"): 
     """
     Counts the occurrence of each code in the given "CSV" file.
 
@@ -45,7 +45,7 @@ def count_codes(code_path = os.path.abspath(IRMA_DIR) + "/image_codes.csv"):
         - Return results
     """
     code_dict = {}
-    codes = pd.read_csv(code_path, delimiter=";", header=None, dtype=str, keep_default_na=False).values
+    codes = pd.read_csv(code_path, delimiter=" ", header=None, dtype=str, keep_default_na=False).values
     for code in codes: 
         if code[1] not in code_dict:
             code_dict[code[1]] = 1
@@ -163,16 +163,20 @@ def mean_average_precision(limit = 10000):
 
     for image_path in tqdm(image_paths):
         query.set_image_name(query_image_name=image_path)
-        query_result = query.run()[1:]
-
         source_irma = irma.get_irma([image_path])[0]
-        preds_irma = irma.get_irma(list(zip(*query_result))[0])
+
+        query_result = query.run(code_count[source_irma])[1:]
+        try:
+            preds_irma = irma.get_irma(list(zip(*query_result))[0])
+        except IndexError:
+            continue
         
         correct_prediction_list = []
         for pred in preds_irma:
+
             correct_prediction_list.append(pred == source_irma)
             
-            ap_sum += average_precision(correct_prediction_list, code_count[source_irma]) 
+        ap_sum += average_precision(correct_prediction_list) 
 
         
     return ap_sum/len(image_paths) 

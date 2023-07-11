@@ -4,7 +4,7 @@ import pandas as pd
 from base import IRMA_DIR
 from pathlib import Path
 
-def csv_to_dict(file_path):
+def csv_to_dict(file_path, delimiter=";"):
     """
     Function to read in a csv file and create a dict based on the first two columns.
 
@@ -24,7 +24,7 @@ def csv_to_dict(file_path):
     - For each row, add an entry to a dict (first column is key, second column is value)
     - Return the dict
     """
-    return dict(zip(*pd.read_csv(file_path, delimiter=";", header=None, dtype=str, keep_default_na=False).values.T))
+    return dict(zip(*pd.read_csv(file_path, delimiter=delimiter, header=None, dtype=str, keep_default_na=False).values.T))
 
     
 class IRMA:
@@ -54,7 +54,7 @@ class IRMA:
         self.c = csv_to_dict(dir_path + '/C.csv')
         self.d = csv_to_dict(dir_path + '/D.csv')
         self.codes_list = [self.a, self.b, self.c, self.d]
-        self.image_codes = csv_to_dict(dir_path + '/image_codes.csv')
+        self.image_codes = csv_to_dict(dir_path + '/image_codes.txt', " ")
 
     def get_irma(self, image_names):
         """
@@ -79,6 +79,8 @@ class IRMA:
         codes = []
         for image_name in image_names:
             image_name_cleaned = Path(image_name).stem 
+
+        
             #print(type(list(self.image_codes.keys())[0]))
             try:
                 #print(str(image_name_cleaned))
@@ -147,7 +149,7 @@ class IRMA:
 
 if __name__ == '__main__':
     csv_to_dict(os.path.abspath("DATA/irma_data/A.csv"))
-    image_names = ["13108.png"]
+    image_names = ["3145.png"]
 
     irma = IRMA()
 
