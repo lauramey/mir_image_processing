@@ -176,7 +176,5 @@ class Searcher:
         for _, row in df.iterrows():
             result[row[-1]] = cosine_distance(np.array(query_features), row[1:-1].values.flatten())
         
-        sorted_list = sorted(result.items(), key=operator.itemgetter(1))
-
-        return list(map(str, sorted_list))
+        return sorted(result.items(), key=operator.itemgetter(1))
         
