@@ -2,7 +2,7 @@ from hand_crafted_features import hand_crafted_features
 #from ae import auto_encoder
 from searcher import Searcher
 import cv2
-import os
+import os, sys
 import numpy as np
 from base import OUTPUT_DIR, IMAGE_DIR
 
@@ -60,7 +60,7 @@ class Query:
         self.features = feature_extractor.extract(self.query_image)
 
 
-    def run(self, limit = 10):
+    def run(self, counter=0, quantity = 10):
         """
         Function to start a query if results have not been computed before.
         Parameters
@@ -84,7 +84,7 @@ class Query:
             searcher = Searcher(self.path_to_index)
             self.results = searcher.search(self.features)
             #print(self.results)
-            return self.results[:limit]
+        return self.results[:quantity]
     
     def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
         """
@@ -115,10 +115,10 @@ class Query:
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
-    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3146.png"))
+    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3319.png"))
     query_result = query.run()
     print("Retrieved images: ", query_result)
-    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3146.png")))
+    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3319.png")))
     cv2.waitKey(0)
 
     cv2.imshow('First result', cv2.imread(os.path.abspath(query_result[0][0])))

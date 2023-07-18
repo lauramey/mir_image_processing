@@ -68,13 +68,13 @@ def start_query():
 
     if not os.path.isdir(target):
         os.mkdir(target)
-
+    
     query.set_image_name(query_image_name= target + selected_image)
     query_result = query.run(counter= 0, quantity= quantity)
     return visualize_query(query_result)
 
 def visualize_query(query_result):
-    image_names = [os.path.basename(x[1]) for x in query_result]
+    image_names = [os.path.basename(x[0]) for x in query_result]
 
     # input infos
     input_code = irma.get_irma(image_names= [selected_image])
@@ -97,13 +97,13 @@ def load():
         print("No more posts")
         res = make_response(jsonify({}), 200)
         return res
-    image_names = [os.path.basename(x[1]) for x in query_result]
+    image_names = [os.path.basename(x[0]) for x in query_result]
 
     # results for retrieved images
     image_codes = irma.get_irma(image_names=image_names)
     irma_infos =[irma.decode_as_str(x) for x in image_codes]
 
-    bundle = [ list(x) + [y] + z for x, y, z in zip (query_result, image_codes, irma_infos)]
+    bundle = [ list(x)[1] + list(x)[0] + [y] + [z] for x, y, z in zip (query_result, image_codes, irma_infos)]
 
     res = make_response(jsonify(bundle), 200)
 

@@ -145,7 +145,7 @@ class IRMA:
         - Possible solution: ['Imaging modality: x-ray, plain radiography, analog, overview image', 'Imaging orientation: coronal, anteroposterior (AP, coronal), supine', 'Body region: abdomen, unspecified', 'System: uropoietic system, unspecified']
         - Solution can look different -> FLASK will use this representation to visualize the information on the webpage.
         """
-        pass
+        return str(self.decode_as_dict(code))
 
 if __name__ == '__main__':
     csv_to_dict(os.path.abspath("DATA/irma_data/A.csv"))
