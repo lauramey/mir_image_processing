@@ -148,7 +148,7 @@ class IRMA:
         return str(self.decode_as_dict(code))
 
 if __name__ == '__main__':
-    csv_to_dict(os.path.abspath("DATA/irma_data/A.csv"))
+    csv_to_dict(os.path.abspath(IRMA_DIR + "/A.csv"))
     image_names = ["3145.png"]
 
     irma = IRMA()

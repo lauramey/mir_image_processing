@@ -86,7 +86,7 @@ class Query:
             #print(self.results)
         
         #Todo: counter hier mit reinnehmen
-        return self.results[quantity]
+        return self.results[counter:quantity]
     
     def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
         """
