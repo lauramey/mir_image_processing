@@ -110,8 +110,9 @@ class Query:
             List with of features.
         """
 
-    # TODO:
-    pass
+        # TODO:
+        modified_query_vector = a * original_query + b * np.mean(relevant, axis=0) - c * np.mean(non_relevant, axis=0)
+        return modified_query_vector
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
