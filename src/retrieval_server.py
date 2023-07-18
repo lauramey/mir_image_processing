@@ -103,7 +103,7 @@ def load():
     image_codes = irma.get_irma(image_names=image_names)
     irma_infos =[irma.decode_as_str(x) for x in image_codes]
 
-    bundle = [ [x[1]] + get_image_path(x[0]) + [y] + [z] for x, y, z in zip (query_result, image_codes, irma_infos)]
+    bundle = [ [x[1]] + get_image_path(x[0]) + [y] + z for x, y, z in zip (query_result, image_codes, irma_infos)]
 
     res = make_response(jsonify(bundle), 200)
 

@@ -145,7 +145,20 @@ class IRMA:
         - Possible solution: ['Imaging modality: x-ray, plain radiography, analog, overview image', 'Imaging orientation: coronal, anteroposterior (AP, coronal), supine', 'Body region: abdomen, unspecified', 'System: uropoietic system, unspecified']
         - Solution can look different -> FLASK will use this representation to visualize the information on the webpage.
         """
-        return str(self.decode_as_dict(code))
+        codes = code.split("-")
+        #decoded_dict = {self.labels_short[0]:[], self.labels_short[1]:[],self.labels_short[2]:[],self.labels_short[3]:[]}
+        decoded_list = []
+        for idx, image_code in enumerate(codes):
+            temp_str = self.labels_short[idx] + ": "
+            for index, _ in enumerate(image_code):
+                try:
+                    temp_str = temp_str + self.codes_list[idx][image_code[0:index+1]] + ", "
+                except Exception as e:
+                    # temp_list.append('not in the files')
+                    pass
+            decoded_list.append(temp_str)
+
+        return decoded_list
 
 if __name__ == '__main__':
     csv_to_dict(os.path.abspath(IRMA_DIR + "/A.csv"))
