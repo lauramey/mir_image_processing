@@ -2,13 +2,13 @@ import cv2
 from hand_crafted_features import hand_crafted_features
 import numpy as np
 import glob
-import sys
+import sys, os
 from base import DATA_DIR
 import csv
 import pandas as pd
 #Trennzeichen: import os os.sep oder from pathlib import PATH
 
-
+#DATA_DIR = 'src/static/images/database'
 def get_images_paths(image_directory, file_extensions):
     """
     Function to receive every path to a file with ending "file_extension" in directory "image_directory".
@@ -32,7 +32,7 @@ def get_images_paths(image_directory, file_extensions):
     """
     images = []
     for extension in file_extensions: 
-        images.extend(glob.glob(image_directory + '*' + extension))
+        images.extend(glob.glob(image_directory + '/*' + extension))
 
     return images
 
@@ -93,7 +93,7 @@ def write_to_file(feature_list, image_paths, output_path):
     df = pd.DataFrame(feature_list)
     df['path'] = image_paths
 
-    df.to_csv(output_path + '.csv')
+    df.to_csv(output_path)
 """ 
     file = open(output_path + '.csv', "w")
     writer = csv.writer(file, delimiter=";")

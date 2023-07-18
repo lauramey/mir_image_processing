@@ -84,7 +84,9 @@ class Query:
             searcher = Searcher(self.path_to_index)
             self.results = searcher.search(self.features)
             #print(self.results)
-        return self.results[:quantity]
+        
+        #Todo: counter hier mit reinnehmen
+        return self.results[quantity]
     
     def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
         """

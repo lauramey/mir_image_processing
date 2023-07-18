@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, send_from_directory, jsonify,
 from preprocessing import preprocessing_main
 from query import Query
 from irma import IRMA
-from base import DATABASE_PATH, INDEX_PATH, QUERY
+from base import DATABASE_PATH, INDEX_PATH, QUERY, IMAGE_DIR
 
 """
 This is the main file to run the medical information retrieval server.
@@ -74,7 +74,7 @@ def start_query():
     return visualize_query(query_result)
 
 def visualize_query(query_result):
-    image_names = [os.path.basename(x[0]) for x in query_result]
+    image_names = [os.path.basename(x) for x in [query_result]]
 
     # input infos
     input_code = irma.get_irma(image_names= [selected_image])
@@ -112,7 +112,7 @@ def load():
 @app.route("/recalc", methods=['POST'])
 def recalc_index():
 
-    preprocessing_main(image_directory = database_path, output_path="static/")
+    preprocessing_main(image_directory = IMAGE_DIR, output_path=INDEX_PATH)
 
     global selected_image
     return render_template("start.html", selected_image= selected_image)
