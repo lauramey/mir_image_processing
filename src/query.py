@@ -109,8 +109,8 @@ class Query:
         selected_images_vector = self.get_feature_vector(selected_images)
         non_selected_images_vector = self.get_feature_vector(not_selected_images)
         feature_result = self.rocchio(self.features, selected_images_vector, non_selected_images_vector)
-        search_result = searcher.search(feature_result)
-        return search_result[:limit]
+        self.results = searcher.search(feature_result)[:limit]
+        return self.results
         
 
     def get_feature_vector(self, image_names):

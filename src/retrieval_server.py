@@ -81,7 +81,7 @@ def visualize_query(query_result):
     input_info =[irma.decode_as_str(x) for x in input_code]
 
     return render_template("query_result.html", 
-        zipped_input=zip([selected_image], [input_code], [input_info]))#,  
+        zipped_input=zip(image_names, [input_code], [input_info]))#,  
      #zipped_results= zip(image_names, image_distances, image_codes, irma_infos))
 
 @app.route("/load")
