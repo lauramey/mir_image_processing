@@ -13,3 +13,4 @@
 
 ## Evaluation Minkowski Distance
 - Histogramme: 0.15915709887019852
+- Laplacian-Eigenmaps: 0.02415809878076651
