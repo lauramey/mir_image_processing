@@ -84,7 +84,9 @@ class Query:
             searcher = Searcher(self.path_to_index)
             self.results = searcher.search(self.features)
             #print(self.results)
-        return self.results[:quantity]
+        
+        #Todo: counter hier mit reinnehmen
+        return self.results[counter:quantity]
     
     def relevance_feedback(self, selected_images, not_selected_images, limit=10):
         """
