@@ -50,7 +50,7 @@ def select_query_image():
     for file in request.files.getlist("file"):
         filename = file.filename
         if filename == '':
-            return render_template("start.html", selected_image= selected_image)
+            return render_template("start.html", selected_image=selected_image)
         destination = "/".join([target, filename])
         file.save(destination)
 
@@ -70,14 +70,14 @@ def start_query():
         os.mkdir(target)
     
     query.set_image_name(query_image_name= target + selected_image)
-    query_result = query.run(counter= 0, quantity= quantity)
+    query_result = query.run(counter=0, quantity=quantity)
     return visualize_query(query_result)
 
 def visualize_query(query_result):
     image_names = [os.path.basename(x[0]) for x in query_result]
 
     # input infos
-    input_code = irma.get_irma(image_names= [selected_image])
+    input_code = irma.get_irma(image_names=[selected_image])
     input_info =[irma.decode_as_str(x) for x in input_code]
 
     return render_template("query_result.html", 
@@ -110,15 +110,15 @@ def load():
     return res
 
 def get_image_path(path):
-    return [IMAGE_DIR + str(os.path.basename(path))]
+    return [os.path.join(IMAGE_DIR, str(os.path.basename(path)))]
 
 @app.route("/recalc", methods=['POST'])
 def recalc_index():
 
-    preprocessing_main(image_directory = IMAGE_SRC_DIR, output_path=INDEX_PATH)
+    preprocessing_main(image_directory=IMAGE_SRC_DIR, output_path=INDEX_PATH)
 
     global selected_image
-    return render_template("start.html", selected_image= selected_image)
+    return render_template("start.html", selected_image=selected_image)
 
 @app.route('/relevance_feedback', methods=['POST', 'GET'])
 def relevance_feedback():
@@ -138,7 +138,7 @@ def relevance_feedback():
 
         global counter 
         counter = 0
-        feeback_result = query.relevance_feedback(selected_images, not_selected_images, limit= quantity)
+        feeback_result = query.relevance_feedback(selected_images, not_selected_images, limit=quantity)
 
         return 'OK', 200
 

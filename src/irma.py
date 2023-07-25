@@ -49,12 +49,12 @@ class IRMA:
         - Save the dicts (list) as class variable
         - Save "image_codes.csv" as dict in a class variable
         """
-        self.a = csv_to_dict(dir_path + '/A.csv')
-        self.b = csv_to_dict(dir_path + '/B.csv')
-        self.c = csv_to_dict(dir_path + '/C.csv')
-        self.d = csv_to_dict(dir_path + '/D.csv')
+        self.a = csv_to_dict(os.path.join(dir_path, 'A.csv'))
+        self.b = csv_to_dict(os.path.join(dir_path, 'B.csv'))
+        self.c = csv_to_dict(os.path.join(dir_path, 'C.csv'))
+        self.d = csv_to_dict(os.path.join(dir_path, 'D.csv'))
         self.codes_list = [self.a, self.b, self.c, self.d]
-        self.image_codes = csv_to_dict(dir_path + '/image_codes.txt', " ")
+        self.image_codes = csv_to_dict(os.path.join(dir_path, 'image_codes.txt'), " ")
 
     def get_irma(self, image_names):
         """
@@ -148,7 +148,7 @@ class IRMA:
         return str(self.decode_as_dict(code))
 
 if __name__ == '__main__':
-    csv_to_dict(os.path.abspath(IRMA_DIR + "/A.csv"))
+    csv_to_dict(os.path.abspath(os.path.join(IRMA_DIR, 'A.csv')))
     image_names = ["3145.png"]
 
     irma = IRMA()

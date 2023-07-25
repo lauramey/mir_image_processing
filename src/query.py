@@ -158,10 +158,10 @@ class Query:
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
-    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3319.png"))
+    query.set_image_name(query_image_name=os.path.abspath(os.path.join(IMAGE_DIR, "3319.png")))
     query_result = query.run()
     print("Retrieved images: ", query_result)
-    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3319.png")))
+    cv2.imshow('input image', cv2.imread(os.path.abspath(os.path.join(IMAGE_DIR, '3319.png'))))
     cv2.waitKey(0)
 
     cv2.imshow('First result', cv2.imread(os.path.abspath(query_result[0][0])))
