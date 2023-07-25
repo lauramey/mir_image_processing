@@ -153,7 +153,7 @@ class Query:
         """
 
         # TODO:
-        modified_query_vector = a * original_query + b * np.mean(relevant, axis=0) - c * np.mean(non_relevant, axis=0)
+        modified_query_vector = a * original_query.features + b * np.mean(relevant, axis=0) - c * np.mean(non_relevant, axis=0)
         return modified_query_vector
 
 if __name__ == "__main__":
