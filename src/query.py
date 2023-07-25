@@ -57,7 +57,7 @@ class Query:
         if self.query_image is None: 
             exit()
         feature_extractor = hand_crafted_features()
-        self.features = feature_extractor.extract(self.query_image)
+        self.features = feature_extractor.extract(self.query_image_name)
 
 
     def run(self, counter=0, quantity = 10):

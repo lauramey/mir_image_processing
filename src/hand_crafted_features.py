@@ -1,5 +1,7 @@
 import numpy as np
 import cv2
+import os
+from base import IMAGE_SRC_DIR
  
 class hand_crafted_features:
     """
@@ -12,7 +14,7 @@ class hand_crafted_features:
     print("Features: ", features)
     """
 
-    def extract(self, image):
+    def extract(self, imagePath):
         """
         Function to extract features for an image.
         Parameters
@@ -24,14 +26,10 @@ class hand_crafted_features:
         -------
         - features : list
             The calculated features for the image.
-
-        Examples
-        --------
-        >>> fe.extract(image)
-        [126, 157, 181, 203, 213, 186, 168, 140, 138, 155, 177, 176]
         """
-        # TODO: You can change your extraction method here:
-       # features = self.image_pixels(image)
+        full_path = os.path.abspath(IMAGE_SRC_DIR + os.path.basename(imagePath))
+        image = cv2.imread(full_path, cv2.IMREAD_GRAYSCALE)
+        assert image is not None
         features = self.histogram(image)
         #print(features)
         # TODO: You can even extend features with another method:

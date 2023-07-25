@@ -61,9 +61,8 @@ def create_feature_list(image_paths):
 
     features = []
     for imagePath in image_paths: 
-       image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
-       assert image is not None
-       features.append(feature_extractor.extract(image))
+       
+       features.append(feature_extractor.extract(imagePath))
     
     return features
 
