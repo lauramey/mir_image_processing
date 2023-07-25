@@ -165,7 +165,7 @@ def mean_average_precision(limit=10000):
         query.set_image_name(query_image_name=image_path)
         source_irma = irma.get_irma([image_path])[0]
 
-        query_result = query.run(code_count[source_irma])[1:]
+        query_result = query.run(0, code_count[source_irma])[1:]
         try:
             preds_irma = irma.get_irma(list(zip(*query_result))[0])
         except IndexError:
@@ -175,7 +175,7 @@ def mean_average_precision(limit=10000):
         for pred in preds_irma:
 
             correct_prediction_list.append(pred == source_irma)
-            
+           
         ap_sum += average_precision(correct_prediction_list) 
 
         
