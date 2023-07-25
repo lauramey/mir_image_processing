@@ -4,7 +4,7 @@
 
 ### mit dynamischen Limit je nach code_count
 - nur mit Histogrammen: Mean Average Precision: 0.16879415137719048
-- nur mit laplacian-eigenmaps: 0.020796229327756363
+- nur mit laplacian-eigenmaps: 0.024335282704020137
 
 ### Mit festem Limit und amount_relevant = code_count
 - Histogramme : 0.06225427887051922
