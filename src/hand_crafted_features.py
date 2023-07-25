@@ -58,6 +58,8 @@ class hand_crafted_features:
             - Create a list out of the histogram (hist.tolist())
             - Return a list (flatten)
         """
+        assert image is not None
+
         hist = cv2.calcHist([image], [0], None, [256], [0,256]).tolist()
         for index, item in enumerate(hist):
             hist[index] = int(item[0])

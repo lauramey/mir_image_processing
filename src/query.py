@@ -123,7 +123,7 @@ class Query:
         # TODO:
         feature_extractor = hand_crafted_features()
 
-        vector = [feature_extractor(i) for i in image_names]
+        vector = [feature_extractor.extract(i) for i in image_names]
 
         return vector
     
