@@ -104,7 +104,9 @@ class Query:
         - results : list
             List with the 'limit' first elements of the 'results' list. 
         """
-        result = self.rocchio(self.features, self.get_feature_vector(selected_images), self.get_feature_vector(not_selected_images))
+        selected_images_vector = self.get_feature_vector(selected_images)
+        non_selected_images_vector = self.get_feature_vector(not_selected_images)
+        result = self.rocchio(self.features, selected_images_vector, non_selected_images_vector)
         return result[:limit]
         
 
@@ -128,7 +130,7 @@ class Query:
         return vector
     
 
-    def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
+    def rocchio(original_query, relevant_images, non_relevant, a = 1, b = 0.8, c = 0.1):
         """
         Function to adapt features with rocchio approach.
 
@@ -153,7 +155,10 @@ class Query:
         """
 
         # TODO:
-        modified_query_vector = a * original_query.features + b * np.mean(relevant, axis=0) - c * np.mean(non_relevant, axis=0)
+        test_a = [a * i for i in original_query.features] 
+        test_b = b * np.mean(relevant_images, axis=0)
+        test_c = c * np.mean(non_relevant, axis=0)
+        modified_query_vector = original_query.features + test_b - test_c
         return modified_query_vector
 
 if __name__ == "__main__":
