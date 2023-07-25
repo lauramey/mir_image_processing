@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import os
 from base import IMAGE_SRC_DIR
+from sklearn.manifold import SpectralEmbedding
  
 class hand_crafted_features:
     """
@@ -30,13 +31,18 @@ class hand_crafted_features:
         full_path = os.path.abspath(IMAGE_SRC_DIR + os.path.basename(imagePath))
         image = cv2.imread(full_path, cv2.IMREAD_GRAYSCALE)
         assert image is not None
-        features = self.histogram(image)
+        features = self.laplacian_eigenmaps(image)
         #print(features)
         # TODO: You can even extend features with another method:
         #features.extend(self.thumbnail_features(image))
 
         return features
     
+    def laplacian_eigenmaps(self, image):
+        embedding = SpectralEmbedding(n_components=2)
+        image_map = embedding.fit_transform(image[:100])
+        return image_map
+
     def histogram(self, image):
         """
         Function to extract histogram features for an image.
