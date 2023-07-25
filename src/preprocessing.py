@@ -119,4 +119,4 @@ def preprocessing_main(image_directory, output_path, file_extensions = (".png", 
 
 if __name__ == '__main__':
     #TODO: relativer Pfad hier :(
-    preprocessing_main(image_directory = DATA_DIR + "test_images/", output_path= DATA_DIR + "output")
+    preprocessing_main(image_directory=os.path.join(DATA_DIR, 'test_images'), output_path=os.path.join(DATA_DIR, 'output'))
