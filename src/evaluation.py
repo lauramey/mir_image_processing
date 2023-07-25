@@ -1,13 +1,6 @@
-from preprocessing import get_images_paths
 from query import Query
 from irma import IRMA
 import glob
-
-import cv2
-import sys
-import numpy as np
-from pathlib import Path
-import csv
 import os
 from tqdm import tqdm
 from base import IRMA_DIR, INDEX_PATH, IMAGE_SRC_DIR

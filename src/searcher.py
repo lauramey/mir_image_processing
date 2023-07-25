@@ -1,11 +1,9 @@
 # import the necessary packages
-import csv
-import math
 import numpy as np
-from numpy.core import sqrt, add
 from pathlib import Path
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity as cs
+from scipy.spatial.distance import minkowski
 from hand_crafted_features import hand_crafted_features
 import operator
 
@@ -58,7 +56,7 @@ def manhattan_distance(self, x, y):
     """
     pass
 
-def minkowski_distance(self, x, y, p):
+def minkowski_distance(x, y, p=2):
     """
     Function to calculate the minkowski distance for two lists 'x' and 'y'.
     Parameters
@@ -74,7 +72,7 @@ def minkowski_distance(self, x, y, p):
     minkowski distance : float
         The minkowski distance between vectors `x` and `y`.
     """
-    pass
+    return minkowski(x, y, p)
 
 def cosine_similarity(x, y):
     """
@@ -174,7 +172,9 @@ class Searcher:
         result = {}
 
         for _, row in df.iterrows():
-            result[row[-1]] = cosine_distance(np.array(query_features), row[1:-1].values.flatten())
+            #result[row[-1]] = cosine_distance(np.array(query_features), row[1:-1].values.flatten())
+            result[row[-1]] = minkowski_distance(np.array(query_features), row[1:-1].values.flatten())
+            
         
         return sorted(result.items(), key=operator.itemgetter(1))
         
