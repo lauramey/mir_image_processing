@@ -86,6 +86,46 @@ class Query:
             #print(self.results)
         return self.results[:quantity]
     
+    def relevance_feedback(self, selected_images, not_selected_images, limit=10):
+        """
+        Function to start a relevance feedback query.
+        Parameters
+        ----------
+        selected_images : list
+            List of selected images.
+        not_selected_images : list
+            List of not selected images.
+        limit : int
+            Amount of results that will be retrieved. Default: 10.
+        Returns
+        -------
+        - results : list
+            List with the 'limit' first elements of the 'results' list. 
+        """
+        result = self.rocchio(self.features, self.get_feature_vector(selected_images), self.get_feature_vector(not_selected_images))
+        return result[:limit]
+        
+
+    def get_feature_vector(self, image_names):
+        """
+        Function to get features from 'index' file for given image names.
+        Parameters
+        ----------
+        image_names : list
+            List of images names.
+        Returns
+        -------
+        - features : list
+            List with of features.
+        """
+        # TODO:
+        feature_extractor = hand_crafted_features()
+
+        vector = [feature_extractor(i) for i in image_names]
+
+        return vector
+    
+
     def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
         """
         Function to adapt features with rocchio approach.
