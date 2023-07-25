@@ -22,7 +22,7 @@ def get_image_paths(image_directory, file_extensions):
 
     return images
 
-def count_codes(code_path = os.path.abspath(IRMA_DIR) + "/image_codes.txt"): 
+def count_codes(code_path=os.path.join(os.path.abspath(IRMA_DIR), 'image_codes.txt')): 
     """
     Counts the occurrence of each code in the given "CSV" file.
 
@@ -54,7 +54,7 @@ def count_codes(code_path = os.path.abspath(IRMA_DIR) + "/image_codes.txt"):
     
     return code_dict
 
-def precision_at_k(correct_prediction_list, k = None):
+def precision_at_k(correct_prediction_list, k=None):
     """
     Function to calculate the precision@k.
 
@@ -132,7 +132,7 @@ def average_precision(correct_prediction_list, amount_relevant= None):
 
     return p_at_k_total / amount_relevant
 
-def mean_average_precision(limit = 10000):
+def mean_average_precision(limit=10000):
     """
     Function to calcualte the mean average precision of the database.
 
@@ -155,7 +155,7 @@ def mean_average_precision(limit = 10000):
         - Compute mean of APs
     """
     irma = IRMA()
-    query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
+    query = Query(path_to_index=os.path.abspath(OUTPUT_DIR))
     code_count = count_codes()
     
     ap_sum = 0

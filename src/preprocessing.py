@@ -61,9 +61,8 @@ def create_feature_list(image_paths):
 
     features = []
     for imagePath in image_paths: 
-       image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
-       assert image is not None
-       features.append(feature_extractor.extract(image))
+       
+       features.append(feature_extractor.extract(imagePath))
     
     return features
 
@@ -119,4 +118,4 @@ def preprocessing_main(image_directory, output_path, file_extensions = (".png", 
 
 if __name__ == '__main__':
     #TODO: relativer Pfad hier :(
-    preprocessing_main(image_directory = DATA_DIR + "test_images/", output_path= DATA_DIR + "output")
+    preprocessing_main(image_directory=os.path.join(DATA_DIR, 'test_images'), output_path=os.path.join(DATA_DIR, 'output'))

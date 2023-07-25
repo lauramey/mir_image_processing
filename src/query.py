@@ -57,7 +57,7 @@ class Query:
         if self.query_image is None: 
             exit()
         feature_extractor = hand_crafted_features()
-        self.features = feature_extractor.extract(self.query_image)
+        self.features = feature_extractor.extract(self.query_image_name)
 
 
     def run(self, counter=0, quantity = 10):
@@ -88,6 +88,46 @@ class Query:
         #Todo: counter hier mit reinnehmen
         return self.results[counter:quantity]
     
+    def relevance_feedback(self, selected_images, not_selected_images, limit=10):
+        """
+        Function to start a relevance feedback query.
+        Parameters
+        ----------
+        selected_images : list
+            List of selected images.
+        not_selected_images : list
+            List of not selected images.
+        limit : int
+            Amount of results that will be retrieved. Default: 10.
+        Returns
+        -------
+        - results : list
+            List with the 'limit' first elements of the 'results' list. 
+        """
+        result = self.rocchio(self.features, self.get_feature_vector(selected_images), self.get_feature_vector(not_selected_images))
+        return result[:limit]
+        
+
+    def get_feature_vector(self, image_names):
+        """
+        Function to get features from 'index' file for given image names.
+        Parameters
+        ----------
+        image_names : list
+            List of images names.
+        Returns
+        -------
+        - features : list
+            List with of features.
+        """
+        # TODO:
+        feature_extractor = hand_crafted_features()
+
+        vector = [feature_extractor.extract(i) for i in image_names]
+
+        return vector
+    
+
     def rocchio(original_query, relevant, non_relevant, a = 1, b = 0.8, c = 0.1):
         """
         Function to adapt features with rocchio approach.
@@ -112,15 +152,16 @@ class Query:
             List with of features.
         """
 
-    # TODO:
-    pass
+        # TODO:
+        modified_query_vector = a * original_query.features + b * np.mean(relevant, axis=0) - c * np.mean(non_relevant, axis=0)
+        return modified_query_vector
 
 if __name__ == "__main__":
     query = Query(path_to_index= os.path.abspath(OUTPUT_DIR))
-    query.set_image_name(query_image_name=os.path.abspath(IMAGE_DIR + "/3319.png"))
+    query.set_image_name(query_image_name=os.path.abspath(os.path.join(IMAGE_DIR, "3319.png")))
     query_result = query.run()
     print("Retrieved images: ", query_result)
-    cv2.imshow('input image', cv2.imread(os.path.abspath(IMAGE_DIR + "/3319.png")))
+    cv2.imshow('input image', cv2.imread(os.path.abspath(os.path.join(IMAGE_DIR, '3319.png'))))
     cv2.waitKey(0)
 
     cv2.imshow('First result', cv2.imread(os.path.abspath(query_result[0][0])))
