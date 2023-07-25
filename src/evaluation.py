@@ -10,7 +10,7 @@ from pathlib import Path
 import csv
 import os
 from tqdm import tqdm
-from base import IRMA_DIR, OUTPUT_DIR, IMAGE_DIR
+from base import IRMA_DIR, INDEX_PATH, IMAGE_SRC_DIR
 import pandas as pd
 
 
@@ -155,11 +155,11 @@ def mean_average_precision(limit=10000):
         - Compute mean of APs
     """
     irma = IRMA()
-    query = Query(path_to_index=os.path.abspath(OUTPUT_DIR))
+    query = Query(path_to_index=INDEX_PATH)
     code_count = count_codes()
     
     ap_sum = 0
-    image_paths = get_image_paths(os.path.abspath(IMAGE_DIR), file_extensions = (".png", ".jpg"))
+    image_paths = get_image_paths(os.path.abspath(IMAGE_SRC_DIR), file_extensions = (".png", ".jpg"))
 
     for image_path in tqdm(image_paths):
         query.set_image_name(query_image_name=image_path)

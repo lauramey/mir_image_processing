@@ -106,9 +106,7 @@ class Query:
         """
 
         searcher = Searcher(self.path_to_index)
-        selected_images_vector = self.get_feature_vector(selected_images)
-        non_selected_images_vector = self.get_feature_vector(not_selected_images)
-        feature_result = self.rocchio(self.features, selected_images_vector, non_selected_images_vector)
+        feature_result = self.rocchio(self.features, self.get_feature_vector(not_selected_images), self.get_feature_vector(selected_images))
         self.results = searcher.search(feature_result)[:limit]
         return self.results
         
